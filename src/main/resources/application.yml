@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /springbootdemo
+spring:
+  application:
+    name: springbootdemo
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/
+mybatis:
+  type-aliases-package: com.yd.springbootdemo.model
+  mapper-locations: classpath:mapping/*.xml
+
