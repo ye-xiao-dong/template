@@ -9,6 +9,16 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: classpath:/static/
+  datasource:
+    url: jdbc:mysql://localhost:3306/shopping?useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: aaaa
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
 mybatis:
   type-aliases-package: com.yd.springbootdemo.model
   mapper-locations: classpath:mapping/*.xml
