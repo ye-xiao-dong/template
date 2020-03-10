@@ -5,6 +5,7 @@ import com.yd.springbootdemo.utils.reflect.ClassUtil;
 import com.yd.springbootdemo.utils.reflect.ReflectUtil;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -274,10 +275,13 @@ public class CollUtil {
         return collection == null || collection.isEmpty();
     }
 
- 	public  static  <V,K> Map<K,V> listToMap(List<V> tList,Function<V,K> function){
+ 	public  static  <V,K> Map<K,V> listToMap(Collection<V> tList,Function<V,K> function){
         return tList.parallelStream().collect(Collectors.toMap( function, v -> v));
     }
 
+    public  static  <V,K> Map<K,V> listToMap(Collection<V> tList, Function<V,K> function, BinaryOperator<V> callBack){
+        return tList.parallelStream().collect(Collectors.toMap( function, v -> v, callBack));
+    }
 }
 
 
