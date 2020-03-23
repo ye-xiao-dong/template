@@ -1,4 +1,4 @@
-package com.yd.springbootdemo.utils.lang;
+package com.yd.springbootdemo.utils.io;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -12,10 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.*;
 import java.util.HashMap;
 
-/**
- * @author： 叶小东
- * @date： 2019/12/24 17:07
- */
 public class FileUtil {
     /**
      * 将整个文件的内容读入一个字符串变量
@@ -79,7 +75,7 @@ public class FileUtil {
      * @param filePath
      */
     public static void unlink(String filePath) {
-        java.io.File file = new java.io.File(filePath);
+        File file = new File(filePath);
         if (file.isFile() && file.exists()) {
             file.delete();
         }
@@ -95,6 +91,7 @@ public class FileUtil {
      * @throws Exception
      */
     public static boolean uploadFile(String filePath, String fileFlag, String url, HashMap<String, Object> extraParams) throws Exception {
+
         File tempFile = new File(filePath);
         FileSystemResource resource = new FileSystemResource(tempFile);
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
@@ -102,6 +99,7 @@ public class FileUtil {
             param.add(entity.getKey(), entity.getValue());
         }
         param.add(fileFlag, resource);
+
         RestTemplate rest = new RestTemplate();
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(param);
         ResponseEntity<String> responseEntity = rest.exchange(url, HttpMethod.POST, httpEntity, String.class);
@@ -129,7 +127,5 @@ public class FileUtil {
         }
         return true;
     }
+
 }
-
-
-

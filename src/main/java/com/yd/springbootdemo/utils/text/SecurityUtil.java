@@ -1,4 +1,4 @@
-package com.yd.springbootdemo.utils.convert;
+package com.yd.springbootdemo.utils.text;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -8,11 +8,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 /**
- * 安全模块（如各类加密函数，指标加密等）
+ * 描述：安全模块（如各类加密函数，指标加密等）
  *
- * @author： 叶小东
- * @date： 2019/12/24 17:43
  */
+
+
 public class SecurityUtil {
 
     private static final Base64.Encoder BASE64_ENCODER = Base64.getEncoder();
@@ -30,6 +30,7 @@ public class SecurityUtil {
             e.printStackTrace();
         }
     }
+
 
     /**
      * 加密指标代码 这里用的是AES的加密，模式是CBC，带偏移，用'\0'填充字符
@@ -81,13 +82,14 @@ public class SecurityUtil {
         return result.substring(8, 24);
     }
 
+
     /**
      * base64编码函数
      *
      * @param str     需要编码的主体
      * @param charset 字符串的编码
      * @return 编码的结果
-     * @throws Exception 编码翻皮水
+     * @throws Exception
      */
     public static String strEncryptBase64(String str, String charset) throws Exception {
         byte[] textByte = str.getBytes(charset);
@@ -101,14 +103,13 @@ public class SecurityUtil {
      * @param str     需要解码的主体
      * @param charset 字符串的编码
      * @return 解码的结果
-     * @throws Exception 解码翻皮水
+     * @throws Exception
      */
     public static String strDecryptBase64(String str, String charset) throws Exception {
         byte[] textByte = str.getBytes(charset);
         String result = new String(BASE64_DECODER.decode(textByte), charset);
         return result;
     }
+
+
 }
-
-
-

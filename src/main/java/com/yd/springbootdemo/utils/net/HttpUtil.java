@@ -1,27 +1,19 @@
-package com.yd.springbootdemo.utils.network;
+package com.yd.springbootdemo.utils.net;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * 提供通过HTTP协议获取内容的方法
+ * 提供通过HTTP协议获取内容的方法 <br/>
  * 所有提供方法中的params参数在内部不会进行自动的url encode，如果提交参数需要进行url encode，请调用方自行处理
- *
- * @author： 叶小东
- * @date： 2019/12/24 17:22
  */
 public class HttpUtil {
-
     /**
      * logger
      */
@@ -50,11 +42,13 @@ public class HttpUtil {
                 }
                 s--;
             }
+
             //只有POST方法才能通过OutputStream(即form的形式)提交参数
             if (method != HttpMethod.POST) {
                 url += "?" + paramsStr.toString();
             }
         }
+
         URL uUrl = null;
         HttpURLConnection conn = null;
         BufferedWriter out = null;
@@ -79,12 +73,14 @@ public class HttpUtil {
                     conn.setRequestProperty(key, headers.get(key));
                 }
             }
+
             if (paramsStr != null && method == HttpMethod.POST) {
                 //发送请求参数
                 out = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), encoding));
                 out.write(paramsStr.toString());
                 out.flush();
             }
+
             //接收返回结果
             StringBuilder result = new StringBuilder();
             in = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
@@ -103,7 +99,7 @@ public class HttpUtil {
                 InputStream es = conn.getErrorStream();
                 if (es != null) {
                     while (es.read(buf) > 0) {
-
+                        ;
                     }
                     es.close();
                 }
@@ -134,7 +130,7 @@ public class HttpUtil {
     }
 
     /**
-     * POST方法提交Http请求，语义为“增加”
+     * POST方法提交Http请求，语义为“增加” <br/>
      * 注意：Http方法中只有POST方法才能使用body来提交内容
      *
      * @param url            资源路径（如果url中已经包含参数，则params应该为null）
@@ -149,7 +145,7 @@ public class HttpUtil {
     }
 
     /**
-     * POST方法提交Http请求，语义为“增加”
+     * POST方法提交Http请求，语义为“增加” <br/>
      * 注意：Http方法中只有POST方法才能使用body来提交内容
      *
      * @param url            资源路径（如果url中已经包含参数，则params应该为null）
@@ -194,7 +190,7 @@ public class HttpUtil {
     }
 
     /**
-     * PUT方法提交Http请求，语义为“更改”
+     * PUT方法提交Http请求，语义为“更改” <br/>
      * 注意：PUT方法也是使用url提交参数内容而非body，所以参数最大长度收到服务器端实现的限制，Resin大概是8K
      *
      * @param url            资源路径（如果url中已经包含参数，则params应该为null）
@@ -209,7 +205,7 @@ public class HttpUtil {
     }
 
     /**
-     * PUT方法提交Http请求，语义为“更改”
+     * PUT方法提交Http请求，语义为“更改” <br/>
      * 注意：PUT方法也是使用url提交参数内容而非body，所以参数最大长度收到服务器端实现的限制，Resin大概是8K
      *
      * @param url            资源路径（如果url中已经包含参数，则params应该为null）
@@ -254,7 +250,7 @@ public class HttpUtil {
     }
 
     /**
-     * HEAD方法提交Http请求，语义同GET方法
+     * HEAD方法提交Http请求，语义同GET方法  <br/>
      * 跟GET方法不同的是，用该方法请求，服务端不返回message body只返回头信息，能节省带宽
      *
      * @param url            资源路径（如果url中已经包含参数，则params应该为null）
@@ -269,7 +265,7 @@ public class HttpUtil {
     }
 
     /**
-     * HEAD方法提交Http请求，语义同GET方法
+     * HEAD方法提交Http请求，语义同GET方法  <br/>
      * 跟GET方法不同的是，用该方法请求，服务端不返回message body只返回头信息，能节省带宽
      *
      * @param url            资源路径（如果url中已经包含参数，则params应该为null）
@@ -283,6 +279,5 @@ public class HttpUtil {
     public static String head(String url, Map params, Map<String, String> headers, int connectTimeout, int readTimeout, String charset) {
         return invokeUrl(url, params, headers, connectTimeout, readTimeout, charset, HttpMethod.HEAD);
     }
+
 }
-
-
